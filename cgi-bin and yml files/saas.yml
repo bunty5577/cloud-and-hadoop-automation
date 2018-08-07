@@ -1,0 +1,27 @@
+---
+- hosts: cloud
+  tasks:
+#  - name: Start the Services
+ #   service:
+  #      name: docker
+   #     state: restarted
+    #    enabled: true
+
+  - name: Create a docker container
+    docker_container:
+        name: newfirefox
+        image: saasfirefox:v1
+        state: started
+        tty: true
+        interactive: true
+        exposed_ports: 22
+        ports: "1799:22"
+
+- hosts: client
+  tasks:
+  - lineinfile:
+        create: yes
+        state: present
+        path: "/root/Desktop/firefox.py"
+        line: "#!/usr/bin/python36 \n\nimport subprocess as sp\nsp.getoutput('sudo sshpass -p redhat ssh 192.168.43.224 -p 1799 -X firefox')"
+        mode: 0755

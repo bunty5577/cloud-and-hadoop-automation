@@ -1,0 +1,45 @@
+- hosts: namenode
+  vars_prompt:
+  tasks:
+  - service:
+     name: "firewalld"
+     state: "stopped"
+  - shell: "setenforce 0"
+#  - name: creating hosts file
+#    copy:
+#     src: "/kalpit/hosts"
+#     dest: "/etc/ansible/hosts"
+  - name: Copying hdfs file for name node
+    copy:
+     src: "/kalpit/hdfs-site.xml"
+     dest: "/etc/hadoop/hdfs-site.xml"
+  - name: Copying core file for name node
+    copy:
+     src: "/kalpit/core-site.xml"
+     dest: "/etc/hadoop/core-site.xml"
+  - name: Creating directory
+    file:
+     path: "/{{ dir }}"
+     state: directory
+  - name: Configuring hdfs file
+    lineinfile:
+      path: /etc/hadoop/hdfs-site.xml
+      regexp: <value>dir</value>
+      line: <value>/{{dir}}</value>
+  - name: Configuring hdfs file
+    lineinfile:
+      path: /etc/hadoop/hdfs-site.xml
+      regexp: <name></name>
+      line: <name>dfs.name.dir</name>
+  - name: Configuring core file
+    lineinfile:
+     path: /etc/hadoop/core-site.xml
+     regexp: <value>hdfs://ip</value>
+     line: <value>hdfs://{{groups['namenode'][0]}}:9001</value>
+  - name: Starting Services
+    shell: "{{ item }}"
+    with_items:
+    - "echo -e 'Y\n' | hadoop namenode -format"
+    - "hadoop-daemon.sh stop namenode"
+    - "hadoop-daemon.sh start namenode"
+

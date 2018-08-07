@@ -1,0 +1,21 @@
+- hosts: sys1
+  tasks:
+  - name: "installing web software" 
+    package: 
+      name: "httpd" 
+      state: "present"
+
+  - name: "deploy web page" 
+    copy: 
+      content: 'this is web site\ntc bye\n'  
+      dest: "/var/www/html/index.html"
+
+  - service: 
+      name: "httpd"
+      state: "running"
+
+  - firewalld: 
+      port: "80/tcp"
+      immediate: true 
+      permanent: true 
+      state: "enabled"

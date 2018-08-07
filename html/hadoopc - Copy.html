@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head style="background-color:Lavender;">
+  <title>hadoop-client</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style2.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  body {
+      position: relative; 
+  }	
+ 
+  .navbar {
+      margin-bottom: 0px;
+	  width:100%;
+	  
+  }
+
+	.button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+	
+}
+  
+  .div5 img:hover{
+   opacity: 0.9;
+    filter: alpha(opacity=90);
+  }
+	
+	.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 100%;
+      margin: auto;
+  }
+  .carousel-content{
+  position:absolute;
+  bottom:10%;
+  left:5%;
+  z-index:20;
+  color:white;
+  }
+  
+  
+  
+  </style>
+</head>
+
+<body >
+<div>
+				<div>
+
+
+				<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:black; ">
+				  <div class="container-fluid">
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>                        
+				      </button>
+				     <!-- <p style="margin-top:7px;"><span class="icon-bar" style="font-family:AR DESTINE; font-size:24px; color:white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;margin-bottom:-5px; margin-left:5px; ">Automation</span></p>     -->
+				    </div>
+				    <div class="collapse navbar-collapse" id="myNavbar">
+				      <ul class="nav navbar-nav" style="float:right">
+					
+					<li><a  href="mmw1.html"  style="color:white; font-size:24px; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;" >Home</a></li>
+					<li><a href="about1.html" style="color:white; font-size:24px;">About Us</a></li>
+					<li><a href="work.html" style="color:white; font-size:24px;">Our Service</a></li>
+						<li><a href="contact1.html" style=" color:white; font-size:24px;">Contact Us</a></li>
+					
+				      </ul>
+				      
+				    </div>
+				  </div>
+				</nav>
+				</div>
+
+</br>
+</br>
+</br>
+</br>
+	<div class="container-fluid">
+		<div class="col-md-6">
+				<div>
+				<center>
+				<h1 style="font-size:70px; font-family:Times New Roman; ">Hadoop Client</h1>
+				</center></div>
+		
+			<div>
+			<img src="hc2.jpg" style="height:100%; width:100%; "/>
+			</div>
+		</div>
+		
+		<div class="col-md-6">
+		    <div>
+			<dialog id="myFirstDialog" style="width:50%;background-color:#F4FFEF;border:1px dotted black; position:left;">  
+						
+						<form action='cgi-bin/mrclient.py'>
+						
+						<h3 style="color:black;">Choose the file to upload:</br></h3> <h5> </br>
+</br><input type='file' name="c"/></br></h5>
+					</br>			
+						<center><b><input style="color:black; font-family:Times New Roman;font-size:20px;" type='submit' /> </b></center>
+						</form>
+						<button id="hide">Close</button>
+							</dialog>
+						
+						
+						
+						
+						<dialog id="mySecondDialog" style="width:50%;background-color:#F4FFEF;border:1px dotted black; position:bottom;"> 
+							
+							<form action='cgi-bin/menu.py'>
+						<h3 style="color:black;">Enter your ip address:</h3><input style="width:80%;" type='number' name='c' /> </br></br>
+						<h3 style="color:black;">Enter no. of NameNodes required:</h3><input style="width:80%;" type='number' name='c' /> </br></br>
+						<h3 style="color:black;">Enter no. of DataNodes required:</h3><input style="width:80%;" type='number' name='c' /> </br></br>
+						<h4 style="color:black;">Choose Source File:</br></h4> <h5> <input type='file'/></br></h5>
+						
+						</br>			
+						<center><b><input style="color:black; font-family:Times New Roman;font-size:20px;" type='submit' /> </b></center>
+						</form>
+						<button id="hide2">Close</button>
+							</dialog>
+						
+						
+						
+						
+						
+						<button type="button" class="btn btn-lg button2"  id="show"  style="background-color:skyblue; float:right;font-size:20px; font-family:Times New Roman; color:white;"><b>Upload File</b></button>
+						<button type="button" class="btn btn-lg button2"  id="show2"  style="background-color:skyblue; float:right;font-size:20px; font-family:Times New Roman; color:white;"><b>Request Cluster</b></button>
+						
+
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						<script type="text/JavaScript">  
+						(function() {    
+						    var firstdialog = document.getElementById('myFirstDialog');    
+						    document.getElementById('show').onclick = function() { 
+								seconddialog.close();
+								firstdialog.show();    
+						    };    
+						    document.getElementById('hide').onclick = function() {    
+						        firstdialog.close();    
+						    };    
+							
+						    var seconddialog = document.getElementById('mySecondDialog');    
+							document.getElementById('show2').onclick = function() { 
+								firstdialog.close();
+								seconddialog.show();    
+							};    
+							document.getElementById('hide2').onclick = function() {    
+							    seconddialog.close();  
+							};
+							
+						})();   
+						</script>  
+						
+						
+						
+						
+
+						
+						
+			</div>			
+			<div style="margin-top:120px;margin-left:90px;">
+					<h2 style="font-family:Times New Roman; color:black;">"Upload File"</h2>
+				</br><h3 style="font-family:Times New Roman;color:black;">Client can upload files to HDFS.</h3>
+</br>
+
+					<h2 style="font-family:Times New Romancolor:black;">"Request Cluster"</h2>
+				</br><h3 style="font-family:Times New Romancolor:black;">Client can place a request to setup a hadoop cluster for his organisation (with specific no. of datanodes) to Server.</h3>
+			</div>
+						
+						
+						
+		</div>
+			
+	</div>
+						
+						
+						
+						
+						
+						
+						
+</div>						

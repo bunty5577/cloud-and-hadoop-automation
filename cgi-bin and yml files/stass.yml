@@ -1,0 +1,73 @@
+- hosts: cloud 
+  #vars_prompt: 
+ # - name: x
+   # prompt: "please enter the name of your logical volume:"
+  #  private: false
+ # - name: y
+   # prompt: "please enter the size of logical volume you want:"
+   # private: false
+  vars: 
+  - ip: "{{ groups['cloud'][0] }}" 
+  - share: "/media/{{ x }} 192.168.43.123(rw,no_root_squash)"
+  tasks:
+  - name: "create partition space for you"
+    parted:
+      device: /dev/sdb
+      state: present
+      number: 1
+      part_end: 20GiB
+  - name: "create volume group"
+    lvg:
+      vg: myvg
+      pvs: /dev/sdb1
+      state: present
+      force: yes
+  - debug:
+      var: x 
+
+  - debug:
+      var: y 
+  - name: "creating logical volume:"
+    lvol:
+      vg: myvg
+      lv: "{{ x }}"
+      size: "{{ y }}"
+  - name: "now formating the logical group:"
+    filesystem:
+      fstype: ext4
+      dev: "/dev/myvg/{{ x }}"
+      force: yes
+  - name: "making the directory"
+    file:
+      path: '/media/{{ x }}'
+      state: directory
+  - name: "mounting the system:"
+    mount:
+      src: "/dev/myvg/{{ x }}"
+      path: "/media/{{ x }}"
+      state: "mounted"
+      fstype: "ext4"
+#  - command: "mount /dev/myvg/{{x}}  /media/{{x}}"
+  - name: "share the mounted drive to client"
+    shell: "echo '/media/{{x}} 192.168.43.123(rw,no_root_squash)' >> /etc/exports"     
+    notify: starting services
+   # ignore_errors: true
+   
+  handlers:
+  - name: starting services  
+    service:
+      name: "nfs"
+      state: "restarted" 
+      enabled: true
+
+
+- hosts: client
+  tasks:
+  - name: mounting on client side
+    file:
+      path: '/media/{{ x }}'
+      state: directory
+  - name: mount on the cloud
+    command: "mount 192.168.43.224:/media/{{ x }} /media/{{ x }}"
+   # ignore_errors: true
+
